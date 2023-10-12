@@ -10,7 +10,6 @@ import { PagesModule } from "./pages/pages.module";
 // Auth
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS  } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { environment, environment_example } from '../environments/environment';
 import { FakeBackendInterceptor } from './core/helpers/fake-backend';
 import { ErrorInterceptor } from './core/helpers/error.interceptor';
 import { JwtInterceptor } from './core/helpers/jwt.interceptor';
@@ -22,8 +21,6 @@ import { LayoutsModule } from './layouts/layouts.module';
 import { LayoutCategoryComponent } from './layout-category/layout-category.component';
 import { LayoutCategoryModule } from './layout-category/layout-category.module';
 
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
 export function createTranslateLoader(http: HttpClient): any {

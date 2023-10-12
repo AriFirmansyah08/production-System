@@ -1,0 +1,27 @@
+ <!-- start page title -->
+ <div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">{{title}}</h4>
+  
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                  <ng-container *ngFor="let item of breadcrumbItems; let last = last">
+                    <li class="breadcrumb-item" [ngClass]="{'active': last }">
+                      <ng-container *ngIf="last; else link">
+                        {{ item.label }}
+                      </ng-container>
+                      <ng-template #link>
+                        <a [routerLink]="item.link">{{ item.label }}</a>
+                      </ng-template>
+                    </li>
+                  </ng-container>
+                </ol>
+              </div>
+              
+  
+        </div>
+    </div>
+  </div>
+  <!-- end page title -->
+  

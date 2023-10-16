@@ -140,6 +140,12 @@ export class ApiService {
     this.httpOptions())
   }
 
+  getByIdHistory(id: number){
+    return this.httpClient.get<any>
+    (environment.API_URL + `/master/history/${id}`, 
+    this.httpOptions())
+  }
+
   // schedule Endpoints
   getAllschedule() {
     return this.httpClient.get<any>

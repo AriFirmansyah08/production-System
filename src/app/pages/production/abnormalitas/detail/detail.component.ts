@@ -4,10 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 
-
-
-
-
 @Component({
   selector: 'app-detail',
   templateUrl: './detail.component.html',
@@ -33,34 +29,25 @@ export class DetailComponent implements OnInit {
      * BreadCrumb
      */
     this.breadCrumbItems = [
-      { label: 'Invoices' },
-      { label: 'Create Invoice', active: true },
+      { label: 'Production', link: '/dashboard-prod' },
+      { label: 'Abnormal', link: '/production/abnormal'},
+      { label: 'Eksports', active: true },
     ];
-    this.route.params.subscribe(params => {
-      const id = params['id'];
-      if (id) {
-        this.apiservice.getByIdabnormal(id).subscribe((res: any) => {
-          // Proses data yang diterima dari API
-        });
-      }
-    });
 
     this.route.params.subscribe(params => {
       console.log(params);
-      
       const id = params['id'];
       this.apiservice.getByIdabnormal(id).subscribe((response: any) => {
         // Pastikan Anda memeriksa apakah 'id_abnormal' ada dalam respons
         console.log(response);
         this.data = response.data[0]
+        this.data.img_problem = this.data.img_problem.split(',');
+        this.data.img_cause = this.data.img_cause.split(',');
+        this.data.img_ca_pa = this.data.img_ca_pa.split(',');
       }, error => {
         console.error('Error:', error);
       });
     });
   }
-  
-  // ekport(){
-  //   const pdf = new jsPDF()
-  // }
 }
 

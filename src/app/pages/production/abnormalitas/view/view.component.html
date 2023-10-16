@@ -1,5 +1,5 @@
 <!-- Start Breadcrumbs -->
-<app-breadcrumbs title="Daily Report" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<app-breadcrumbs title="Abnormal" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 <!-- End Breadcrumbs -->
 
 <div class="row">
@@ -10,16 +10,21 @@
                     <div class="row g-4 mb-3">
                         <div class="col-sm-auto">
                             <div class="d-flex gap-1 px-5">
-                                <button class="btn btn-primary" [routerLink]="['add']"
-                                    routerLinkActive="router-link-active">Add</button>
-                                <button class="btn btn-primary" [routerLink]="['detail']"
-                                    routerLinkActive="router-link-active">detail</button>
+                                <button type="button" class="btn btn-primary add-btn" [routerLink]="['add']">
+                                    <i class="ri-add-line align-bottom me-1"></i> Add
+                                </button>
                             </div>
                         </div>
                         <div class="col-sm">
+                            <div class="d-flex justify-content-sm-end">
+                                <div class="search-box ms-2">
+                                    <input type="text" class="form-control search" placeholder="Search..."
+                                        [(ngModel)]="searchTerm" (input)="onSearch()" />
+                                    <i class="ri-search-line search-icon"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
                     <div class="table-responsive table-card mt-3 mb-1">
                         <table class="table">
                             <thead>
@@ -27,29 +32,29 @@
                                     <th scope="col" style="width: 50px;">
                                         NO
                                     </th>
-                                    <th>Date</th>
+                                    <th>Date - Time</th>
                                     <th>Problem</th>
                                     <th>Cause</th>
                                     <th>CA - PA</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
+
                             <tbody>
-                                <tr *ngFor="let data of abnormalData; let i = index" [attr.id]="'lj_' + data.id">
-                                    <th scope="row">
-                                        {{ i + 1 }}
-                                    </th>
+                                <tr *ngFor="let data of filteredAbnormalData; let i = index" id="lj_{{data.id}}">
+                                    <ng-container *ngIf="i >= (page - 1) * pageSize && i < page * pageSize">
+                                        <td>{{ i + 1 }}</td>
                                     <td>
-                                        <div [innerHTML]="data.date"></div>
+                                        <div [innerHTML]="data.date | date: 'dd/MM/yyyy HH:mm'"></div>
                                     </td>
                                     <td>
-                                        <div [innerHTML]="data.problem"></div>
+                                        <div [innerHTML]="data.problem | sliceWords:3"></div>
                                     </td>
                                     <td>
-                                        <div [innerHTML]="data.cause"></div>
+                                        <div [innerHTML]="data.cause | sliceWords:3"></div>
                                     </td>
                                     <td>
-                                        <div [innerHTML]="data.ca_pa"></div>
+                                        <div [innerHTML]="data.ca_pa | sliceWords:3"></div>
                                     </td>
                                     <td>
                                         <div class="dropdown" ngbDropdown>
@@ -58,24 +63,44 @@
                                                 ngbDropdownToggle>
                                                 <i class="ri-more-2-fill"></i>
                                             </a>
-
                                             <ul class="dropdown-menu dropdown-menu-end"
                                                 aria-labelledby="dropdownMenuLink1" ngbDropdownMenu>
-                                                <li><a class="dropdown-item" (click)="getByIdAbnormal(data.id_abnormal)">View</a></li>
-                                                <li><a class="dropdown-item" (click)="getByIdAbnormal(data.id_abnormal)">Edit</a></li>
-                                                <li><a class="dropdown-item" (click)="getByIdAbnormal(data.id_abnormal)">Delete</a></li>
+                                                <li><a class="dropdown-item"
+                                                        (click)="getByIdAbnormal(data.id_abnormal)">View</a></li>
+                                                <li><a class="dropdown-item"
+                                                        (click)="getByIdAbnormal(data.id_abnormal)">Edit</a></li>
+                                                <li><a class="dropdown-item"
+                                                        (click)="getByIdAbnormal(data.id_abnormal)">Delete</a></li>
                                             </ul>
                                         </div>
                                     </td>
+                                </ng-container>
+                                    
                                 </tr>
                             </tbody>
-
                         </table>
                     </div>
 
+                    <div class="row justify-content-md-between align-items-md-center d-print-none">
+                        <div class="col col-sm-6">
+                            <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                                Showing
+                                {{startIndex}} to
+                                {{endIndex}} of {{totalRecords}}
+                                entries
+                            </div>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="col col-sm-6">
+                            <div class="text-sm-right float-end listjs-pagination">
+                                <!-- <ngb-pagination [collectionSize]="totalRecords" [(page)]="page" [pageSize]="pageSize" [maxSize]="2"></ngb-pagination> -->
+                                <ngb-pagination [collectionSize]="totalRecords" [(page)]="page" [pageSize]="pageSize" [maxSize]="2" [ellipses]="false"></ngb-pagination>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div><!-- end card -->
+            </div><!-- end card -->
+        </div>
+        <!-- end col -->
     </div>
-    <!-- end col -->
-</div>

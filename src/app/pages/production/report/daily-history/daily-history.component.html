@@ -19,7 +19,7 @@
                             <div class="d-flex justify-content-sm-end">
                                 <div class="search-box ms-2">
                                     <input type="text" class="form-control search" placeholder="Search..."
-                                        [(ngModel)]="service.searchTerm">
+                                        [(ngModel)]="searchTerm" (input)="onSearch()" />
                                     <i class="ri-search-line search-icon"></i>
                                 </div>
                             </div>
@@ -39,7 +39,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let data of historyData" id="lj_{{data.id}}">
+                                <tr *ngFor="let data of filteredHistoryData" id="lj_{{data.id}}">
                                     <th scope="row">
                                         <!-- ///number -->
                                     </th>
@@ -52,9 +52,10 @@
                                         </ngb-highlight>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-danger">
-                                            <i class="ri-printer-line align-bottom me-1">
-                                            </i>Eksport
+
+                                        <button type="button" class="btn btn-danger"
+                                            (click)="getByIdHistory(data.id_history)">
+                                            <i class="ri-printer-line align-bottom me-1"></i>Eksport
                                         </button>
                                     </td>
                                 </tr>

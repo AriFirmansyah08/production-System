@@ -18,8 +18,8 @@ import { JwtInterceptor } from './core/helpers/jwt.interceptor';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { LayoutsModule } from './layouts/layouts.module';
-import { LayoutCategoryComponent } from './layout-category/layout-category.component';
 import { LayoutCategoryModule } from './layout-category/layout-category.module';
+import { SliceWordsPipe } from './slice-words.pipe';
 
 
 
@@ -36,6 +36,7 @@ export function createTranslateLoader(http: HttpClient): any {
 @NgModule({
   declarations: [
     AppComponent,
+    SliceWordsPipe,
   ],
   imports: [
     TranslateModule.forRoot({

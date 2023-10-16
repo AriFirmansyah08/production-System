@@ -17,6 +17,8 @@ import { DailyHistoryComponent } from './daily-history/daily-history.component';
 import { defineElement } from 'lord-icon-element';
 import lottie from 'lottie-web';
 import { NgDailySortableHeader } from './daily-report/daily-report-sortable.directive';
+import { EksportsComponent } from './eksports/eksports.component';
+import { ReportComponent } from './report.component';
 
 
 
@@ -27,6 +29,8 @@ import { NgDailySortableHeader } from './daily-report/daily-report-sortable.dire
         MontlyReportComponent,
         NgDailySortableHeader,
         DailyHistoryComponent,
+        EksportsComponent,
+        ReportComponent,
     ],
     imports: [
         CommonModule,

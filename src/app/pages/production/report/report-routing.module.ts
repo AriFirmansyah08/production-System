@@ -4,8 +4,14 @@ import { DailyReportComponent } from './daily-report/daily-report.component';
 import { WeklyReportComponent } from './wekly-report/wekly-report.component';
 import { MontlyReportComponent } from './montly-report/montly-report.component';
 import { DailyHistoryComponent } from './daily-history/daily-history.component';
+import { EksportsComponent } from './eksports/eksports.component';
+import { ReportComponent } from './report.component';
 
 const routes: Routes = [
+  {
+    path:'',
+    component: ReportComponent
+  },
   {
     path:'daily',
     component: DailyReportComponent,
@@ -21,6 +27,11 @@ const routes: Routes = [
   {
     path:'daily/history',
     component: DailyHistoryComponent,
+  },
+
+  {
+    path:'daily/history/:id',
+    component:  EksportsComponent,
   },
 ];
 

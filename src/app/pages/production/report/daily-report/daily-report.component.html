@@ -40,9 +40,7 @@
             <table class="table">
               <thead>
                 <tr class="bg-light text-muted">
-                  <th scope="col" style="width: 50px;">
-                    NO
-                  </th>
+                  <th scope="col" style="width: 50px;">NO</th>
                   <th>Shift Leader</th>
                   <th>Production Hours</th>
                   <th>Start</th>
@@ -53,14 +51,10 @@
                 </tr>
               </thead>
               <tbody>
-                <!-- <tr *ngFor="let data of dailyData" id="lj_{{data.id}}">
-                  <th scope="row"> -->
-                    <tr *ngFor="let data of dailyData; let i = index" id="lj_{{data.id}}">
-                      <th scope="row">
-                        {{ i + 1 }}
-                      </th>
-                    <!-- code number -->
-                  <!-- </th> -->
+                <tr *ngFor="let data of dailyData; let i = index" id="lj_{{data.id}}">
+                  <th scope="row">
+                    {{ i + 1 }}
+                  </th>
                   <td>
                     <ngb-highlight [result]="data.shift_leaders" [term]="service.searchTerm"></ngb-highlight>
                   </td>
@@ -77,7 +71,7 @@
                     <ngb-highlight [result]="data.result" [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
-                    <ngb-highlight [result]="data.update_at" [term]="service.searchTerm"></ngb-highlight>
+                    <ngb-highlight [result]="data.update_at | date: 'dd/MM/yyyy - HH:mm' " [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
                     <div class="edit d-print-none">
@@ -88,8 +82,12 @@
                     </div>
                   </td>
                 </tr>
+                <tr *ngIf="dailyData.length === 0">
+                  <td colspan="8" class="text-center">No data available.</td>
+                </tr>
               </tbody>
             </table>
+            
           </div>
 
           <div class="row justify-content-md-between align-items-md-center d-print-none">

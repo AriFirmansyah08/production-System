@@ -118,8 +118,8 @@ export const MENU: MenuItem[] = [
   },
   {
     id: 3,
-    label: 'Refres',
-    icon: 'ri-recycle-fill',
+    label: 'Refresh',
+    icon: 'ri-refresh-line',
     link: 'pages/gateway',
     eventCLick:'onRemove',
     category: 'can',
@@ -207,8 +207,8 @@ export const MENU: MenuItem[] = [
   },
   {
     id: 3,
-    label: 'Refres',
-    icon: 'ri-recycle-fill',
+    label: 'Refresh',
+    icon: 'ri-refresh-line',
     link: '/pages/gateway',
     eventCLick:'onRemove',
     category: 'can',
@@ -219,8 +219,8 @@ export const MENU: MenuItem[] = [
   //all user
   {
     id: 3,
-    label: 'Refres',
-    icon: 'ri-recycle-fill',
+    label: 'Refresh',
+    icon: 'ri-refresh-line',
     link: '/pages/gateway',
     eventCLick:'onRemove',
   },

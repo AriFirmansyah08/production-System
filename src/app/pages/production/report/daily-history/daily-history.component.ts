@@ -8,6 +8,7 @@ import { DailyReportService } from 'src/app/core/services/daily-report.service';
 import { ApiService } from 'src/app/core/services/api.service';
 import { DailyReportModel } from 'src/app/core/models/daily-reports';
 import { NgDailySortableHeader, listSortEvent } from '../daily-report/daily-report-sortable.directive'
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 
@@ -19,6 +20,9 @@ import { NgDailySortableHeader, listSortEvent } from '../daily-report/daily-repo
 })
 
 export class DailyHistoryComponent {
+  searchTerm: string = '';
+  filteredHistoryData: any[] = [];
+
   breadCrumbItems!: Array<{}>;
 
   submitted = false;
@@ -40,13 +44,20 @@ export class DailyHistoryComponent {
   dataterm: any;
   term: any;
 
+  id: number | undefined;
+
   // Table data
   datatabel!: Observable<DailyReportModel[]>;
   total: Observable<number>;
   @ViewChildren(NgDailySortableHeader) headers!: QueryList<NgDailySortableHeader>;
   isConnected: boolean | undefined;
   historyData: any;
-  constructor(private modalService: NgbModal, public service: DailyReportService, private formBuilder: UntypedFormBuilder, public apiservice:ApiService) {
+  DataById: any;
+  constructor( 
+    public service: DailyReportService, 
+    public apiservice:ApiService,
+    private router: Router,
+    private route: ActivatedRoute,) {
     this.datatabel = service.countries$;
     this.total = service.total$;
   }
@@ -56,12 +67,22 @@ export class DailyHistoryComponent {
     * BreadCrumb
     */
     this.breadCrumbItems = [
-      { label: 'Production' },
-      { label: 'Report' },
-      { label: 'Daily' },
+      { label: 'Production', link: '/dashboard-prod' },
+      { label: 'Report', link: '/production/report'},
+      { label: 'Daily', link: '/production/report/daily'},
       { label: 'History', active: true }
     ];
 
+    this.route.params.subscribe(params => {
+      // Periksa apakah parameter 'id' ada
+      if ('id' in params) {
+        this.id = params['id'];
+        console.log('Id Yang Di tangkap', this.id);
+
+        // Selanjutnya, Anda dapat menggunakan this.id untuk mengambil data yang sesuai
+        // dan melakukan operasi lain sesuai kebutuhan.
+      }
+    });
 
     this.datatabel.subscribe(x => {
       this.ListJsDatas = Object.assign([], x);
@@ -98,26 +119,39 @@ export class DailyHistoryComponent {
   * @param param0 sort the column
   *
   */
-  onSort({ column, direction }: listSortEvent) {
-    // resetting other headers
-    this.headers.forEach(header => {
-      if (header.listsortable !== column) {
-        header.direction = '';
-      }
-    });
 
-    this.service.sortColumn = column;
-    this.service.sortDirection = direction;
+  onSearch(): void {
+    if (!this.searchTerm) {
+      this.filteredHistoryData = this.historyData;
+    } else {
+      this.filteredHistoryData = this.historyData.filter((data: { id_history: { toString: () => string | string[]; }; date: { toString: () => string | string[]; }; }) => {
+        return (
+          data.id_history.toString().includes(this.searchTerm) ||
+          data.date.toString().includes(this.searchTerm)
+        );
+      });
+    }
   }
 
-  
-  //real
+  // onSort({ column, direction }: listSortEvent) {
+  //   // resetting other headers
+  //   this.headers.forEach(header => {
+  //     if (header.listsortable !== column) {
+  //       header.direction = '';
+  //     }
+  //   });
+
+  //   this.service.sortColumn = column;
+  //   this.service.sortDirection = direction;
+  // }
+
   getAllHistory() {
     this.isConnected = true;
     this.apiservice.getAllHistory().subscribe({
       next: (res: any) => {
         if (res.status) {
-          this.historyData = res.data
+          this.historyData = res.data;
+          this.filteredHistoryData = this.historyData; // Isi filteredHistoryData
           console.log(this.historyData);
         } else {
           console.error(`${res.data.message}`);
@@ -133,7 +167,26 @@ export class DailyHistoryComponent {
         }, 1000);
       },
     });
-  }
+  }  
+
+  getByIdHistory(id: any) {
+    console.log('Id Yang Di tangkap', id);
+    this.apiservice.getByIdHistory(id).subscribe({
+      
+      next: (res: any) => {
+        this.DataById = res.data
+        console.log(this.DataById)
+        // this.router.navigate(['daily/history/', id], { state: { data: this.DataById } })
+        this.router.navigate(['production/report/daily/history/', id]);
+      },
+      error: (err: any) => {
+        console.error(err);
+        setTimeout(() => {
+          this.isConnected = false;
+        }, 1000);
+      },
+    });
+  }  
 
 }
 

@@ -99,8 +99,8 @@ export class DailyReportComponent {
 
   ngOnInit(): void {
     this.breadCrumbItems = [
-      { label: 'Production' },
-      { label: 'Report' },
+      { label: 'Production', link: '/dashboard-prod' },
+      { label: 'Report', link: '/production/report'},
       { label: 'Daily', active: true }
     ];
     this.userData = this.AuthenticationService.getUserData();

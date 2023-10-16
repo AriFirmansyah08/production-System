@@ -92,16 +92,12 @@ export class DailyReportService {
     this._search$.next();
   }
 
-  // private _search(): Observable<SearchResult> {
-  //   const {sortColumn, sortDirection, pageSize, page, searchTerm} = this._state;
+    // 1. sort
+    // let countries = sort(ListJs, sortColumn, sortDirection);
 
-  //   // 1. sort
-  //   let countries = sort(this.dailyData, sortColumn, sortDirection);
+    // 2. filter
+    // countries = countries.filter(country => matches(country, searchTerm, this.pipe));
+    // const total = countries.length;
 
-  //   // 2. filter
-  //   countries = countries.filter(country => matches(country, searchTerm, this.pipe));
-  //   const total = countries.length;
-
-  //   3. paginate
-  
-}
+    // 3. paginate
+  }

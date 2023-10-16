@@ -17,8 +17,11 @@
   .square-image {
     width: 150px; /* Atur lebar sesuai yang Anda inginkan */
     height: 150px; /* Atur tinggi sesuai yang Anda inginkan */
-    object-fit: cover; /* Menjaga gambar tetap proporsional */
+    object-fit: contain; /* Menjaga gambar tetap proporsional tanpa memotong */
+    border: 0px solid #ccc; /* Garis tepi untuk menampilkan batas kotak gambar */
+    
   }
+  
 
   /* Menghilangkan judul (title) */
 @page {

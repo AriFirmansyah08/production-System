@@ -27,9 +27,9 @@ export class AddComponent implements OnInit {
   problem: any;
   postData:any;
   fileName: any;
-  img_problem : any;
-  img_cause: any;
-  img_ca_pa:any
+  img_problem : any = [];
+  img_cause: any = [];
+  img_ca_pa:any = []
 
   constructor(
     private form: FormBuilder,
@@ -58,24 +58,23 @@ export class AddComponent implements OnInit {
   onUploadImgProblem(event: DropzoneEvent) {
     this.dropzoneResponse = event[1];
     if (this.dropzoneResponse !== undefined) {
-      this.fileName = this.dropzoneResponse.filename;
-      this.img_problem = this.fileName;
-      
+      this.fileName = this.dropzoneResponse.filename
+      this.img_problem.push(this.fileName)
     }
   }
 
   onUploadImgCause(event: DropzoneEvent) {
     this.dropzoneResponse = event[1];
     if (this.dropzoneResponse !== undefined) {
-      this.fileName = this.dropzoneResponse.filename;
-      this.img_cause = this.fileName;
+      this.fileName = this.dropzoneResponse.filename
+      this.img_cause.push(this.fileName);
     }
   }
   onUploadImgCapa(event: DropzoneEvent) {
     this.dropzoneResponse = event[1];
     if (this.dropzoneResponse !== undefined) {
-      this.fileName = this.dropzoneResponse.filename;
-      this.img_ca_pa = this.fileName;
+      this.fileName = this.dropzoneResponse.filename
+      this.img_ca_pa.push(this.fileName)
     }
   }
   
@@ -89,14 +88,15 @@ export class AddComponent implements OnInit {
     const currentDate = new Date();
   
     // Buat objek data yang akan dikirim ke API sesuai dengan struktur yang diperlukan oleh API Anda
+    console.log(this.img_ca_pa)
     const postData = {
       date: currentDate,
       problem: problem.value,
       cause: cause.value,
       ca_pa: ca_pa.value,
-      img_problem: this.img_problem,
-      img_cause: this.img_cause,
-      img_ca_pa: this.img_ca_pa,
+      img_problem: this.img_problem.join(','),
+      img_cause: this.img_cause.join(','),
+      img_ca_pa: this.img_ca_pa.join(','),
     };
   
     // Panggil metode layanan apiService untuk menyimpan data ke dalam tabel yang sesuai dalam database
